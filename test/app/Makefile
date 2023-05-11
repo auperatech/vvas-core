@@ -1,0 +1,12 @@
+APP = test_video_ml
+APP_SOURCE_FILES = test_cascade_yolov3_3xresnet.cpp
+XRT_PKG_CFG=`pkg-config --cflags --libs xrt`
+VVAS_UTILS_PKG_CFG=`pkg-config --cflags --libs vvas-utils`
+VVAS_CORE_PKG_CFG=`pkg-config --cflags --libs vvas-core`
+VVAS_CORE_MACROS=-DVVAS_GLIB_UTILS -DXLNX_PCIe_PLATFORM -DXLNX_V70_PLATFORM
+${APP}: ${APP_SOURCE_FILES}
+	g++ -Wall -g $(APP_SOURCE_FILES) $(XRT_PKG_CFG) $(VVAS_UTILS_PKG_CFG) $(VVAS_CORE_PKG_CFG) $(VVAS_CORE_MACROS) -o $(APP)
+app:
+	make ${APP}
+clean:
+	rm ${APP}
